@@ -2,19 +2,45 @@ package com.auth0.samples;
 
 import org.apache.catalina.startup.Tomcat;
 
-import java.util.Optional;
+import java.io.File;
+import java.io.IOException;
 
 public class Main {
-    public static final Optional<String> port = Optional.ofNullable(System.getenv("PORT"));
+	private static final int PORT = getPort();
 
-    public static void main(String[] args) throws Exception {
-        String contextPath = "/";
-        String appBase = ".";
-        Tomcat tomcat = new Tomcat();
-        tomcat.setPort(Integer.valueOf(port.orElse("8080")));
-        tomcat.getHost().setAppBase(appBase);
-        tomcat.addWebapp(contextPath, appBase);
-        tomcat.start();
-        tomcat.getServer().await();
-    }
+	public static void main(String[] args) throws Exception {
+		String contextPath = "/";
+		String appBase = ".";
+		Tomcat tomcat = new Tomcat();
+		tomcat.setBaseDir(createTempDir());
+		tomcat.setPort(PORT);
+		tomcat.getHost().setAppBase(appBase);
+		tomcat.addWebapp(contextPath, appBase);
+		tomcat.start();
+		tomcat.getServer().await();
+	}
+
+	private static int getPort() {
+		String port = System.getenv("PORT");
+		if (port != null) {
+			return Integer.valueOf(port);
+		}
+		return 8080;
+	}
+
+	// based on AbstractEmbeddedServletContainerFactory
+	private static String createTempDir() {
+		try {
+			File tempDir = File.createTempFile("tomcat.", "." + PORT);
+			tempDir.delete();
+			tempDir.mkdir();
+			tempDir.deleteOnExit();
+			return tempDir.getAbsolutePath();
+		} catch (IOException ex) {
+			throw new RuntimeException(
+					"Unable to create tempDir. java.io.tmpdir is set to " + System.getProperty("java.io.tmpdir"),
+					ex
+			);
+		}
+	}
 }
