@@ -1,0 +1,46 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.auth0.samples'
+version = '1.0-SNAPSHOT'
+
+description = "employees-app Maven Webapp"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+dependencies {
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '7.0.57'
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: '7.0.57'
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '7.0.57'
+    compile group: 'org.apache.tomcat', name: 'tomcat-jasper', version: '7.0.57'
+    compile group: 'org.apache.tomcat', name: 'tomcat-jasper-el', version: '7.0.57'
+    compile group: 'org.apache.tomcat', name: 'tomcat-jsp-api', version: '7.0.57'
+    compile group: 'jstl', name: 'jstl', version: '1.2'
+    testCompile group: 'junit', name: 'junit', version: '3.8.1'
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+    }
+}
+
+processResources {
+    from("src/main/webapp") {
+        into("META-INF/resources")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+mainClassName = 'com.auth0.samples.Main'
