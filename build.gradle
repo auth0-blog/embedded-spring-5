@@ -14,13 +14,10 @@ repositories {
 }
 
 dependencies {
-    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '8.0.47'
-    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-logging-juli', version: '8.0.47'
     compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '8.0.47'
-    compile group: 'org.apache.tomcat', name: 'tomcat-jasper', version: '8.0.47'
-    compile group: 'org.apache.tomcat', name: 'tomcat-jasper-el', version: '8.0.47'
-    compile group: 'org.apache.tomcat', name: 'tomcat-jsp-api', version: '8.0.47'
-    compile group: 'jstl', name: 'jstl', version: '1.2'
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.1.RELEASE'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.2'
+
     testCompile group: 'junit', name: 'junit', version: '3.8.1'
 }
 
