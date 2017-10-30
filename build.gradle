@@ -1,16 +1,16 @@
+group 'com.auth0.samples'
+version '1.0-SNAPSHOT'
+
 apply plugin: 'java'
-apply plugin: 'maven'
-
-group = 'com.auth0.samples'
-version = '1.0-SNAPSHOT'
-
-description = "employees-app Maven Webapp"
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+mainClassName = 'com.auth0.samples.Main'
 
 repositories {
-    maven { url "http://repo.maven.apache.org/maven2" }
+    mavenCentral()
 }
 
 dependencies {
@@ -18,7 +18,7 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.1.RELEASE'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.2'
 
-    testCompile group: 'junit', name: 'junit', version: '3.8.1'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 buildscript {
@@ -30,14 +30,6 @@ buildscript {
     }
 }
 
-processResources {
-    from("src/main/webapp") {
-        into("META-INF/resources")
-    }
+shadowJar {
+    mergeServiceFiles()
 }
-
-apply plugin: 'java'
-apply plugin: 'application'
-apply plugin: 'com.github.johnrengelman.shadow'
-
-mainClassName = 'com.auth0.samples.Main'

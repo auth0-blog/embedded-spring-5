@@ -1,6 +1,8 @@
 package com.auth0.samples;
 
+import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
+import org.springframework.web.context.support.GenericWebApplicationContext;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,15 +11,16 @@ public class Main {
 	private static final int PORT = getPort();
 
 	public static void main(String[] args) throws Exception {
-		String contextPath = "/";
 		String appBase = ".";
 		Tomcat tomcat = new Tomcat();
 		tomcat.setBaseDir(createTempDir());
 		tomcat.setPort(PORT);
 		tomcat.getHost().setAppBase(appBase);
-		tomcat.addWebapp(contextPath, appBase);
+		Context ctx = tomcat.addWebapp("", ".");
 		tomcat.start();
 		tomcat.getServer().await();
+
+		new GenericWebApplicationContext(ctx.getServletContext());
 	}
 
 	private static int getPort() {
