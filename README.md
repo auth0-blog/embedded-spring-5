@@ -11,5 +11,5 @@ article on Auth0's blog. Head there to learn how to embed Tomcat 8 on a Spring 5
 ./gradlew clean shadowJar
 
 # run uber jar
-java -jar build/libs/employees-app-1.0-SNAPSHOT-all.jar
+java -jar build/libs/embedded-spring-5-1.0-SNAPSHOT-all.jar
 ```
